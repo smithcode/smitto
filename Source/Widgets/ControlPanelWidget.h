@@ -15,7 +15,6 @@
  * along with Smitto; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #pragma once
 
 #include <smitto.h>

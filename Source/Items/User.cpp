@@ -15,33 +15,27 @@
  * along with Smitto; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include <smitto.h>
-#include <Items/MetaItems.h>
-#include <QtCore/QDateTime>
+#include "User.h"
 
 namespace Smitto {
 
-struct SMITTO_LIB_EXPORT UserRecord : Ramio::MetaStandardItemData
+RMETA_DATA_IMPL(UserRecord)
+	RMETA_DATA_FIELD(login, String, "Пользователь")
+	RMETA_DATA_FIELD(password, String, "Пароль")
+	RMETA_DATA_FIELD(name, String, "Имя")
+	RMETA_DATA_FIELD(birthday, DateTime, "День рождения")
+RMETA_DATA_END
+
+GENERATE_SOURCE_METACLASS(User, UserRecord)
+
+GENERATE_SOURCE_METASET(MetaUserSet, "Users", "User")
+
+User* MetaUserSet::findUser(const QString& login, const QString* password)
 {
-	RMString login;
-	RMString password;
-	RMString name;
-    RMDateTime birthday;
-
-	RMETA_DATA_DECL(Ramio::MetaStandardItemData)
-};
-
-class SMITTO_LIB_EXPORT User;
-GENERATE_HEADER_METACLASS(User, UserRecord)
-
-class SMITTO_LIB_EXPORT MetaUserSet;
-GENERATE_HEADER_METASET_START(MetaUserSet, User, UserRecord)
-
-	User* findUser(const QString& login, const QString* password = Q_NULLPTR);
-	const User* findUser(const QString& login, const QString* password = Q_NULLPTR) const {
-		return const_cast<MetaUserSet*>(this)->findUser(login, password);}
-};
+	for (auto* user : *this)
+		if (user->data().login == login && (!password || user->data().password == *password))
+			return user;
+	return Q_NULLPTR;
+}
 
 } // Smitto::

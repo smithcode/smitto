@@ -18,6 +18,7 @@
 #pragma once
 
 #include <smitto.h>
+#include <Items/BaseRecord.h>
 #include <Items/MetaItems.h>
 #include <Protocol/ProtocolEnums.h>
 #include <Network/NetGlobal.h>

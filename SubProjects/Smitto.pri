@@ -33,6 +33,7 @@ HEADERS += \
 
 include (Algo.pri)
 include (Base.pri)
+include (Items.pri)
 include (System.pri)
 include (Data.pri)
 include (RemoteSessions.pri)

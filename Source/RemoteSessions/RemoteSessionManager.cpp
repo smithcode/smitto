@@ -16,7 +16,7 @@
  */
 
 #include "RemoteSessionManager.h"
-#include "User.h"
+#include "../Items/User.h"
 #include <Connection/TcpServerHandler.h>
 #include <RamioProtocol>
 #include <ramio/log/log.h>
@@ -68,13 +68,14 @@ void RemoteSessionManager::onQueryReceived(Ramio::Proto::Queries query, const Ra
 			sesion->data().queryTime = sesion->data().loginTime;
 			sesion->data().login = qlp.username;
 			sesion->data().userId = user->id();
+			sesion->data().id = user->id();
 			answerPacket.res = 0;
 			answerPacket.userId = QString::number(user->id());
 			answerPacket.name = user->data().name;
 			answerPacket.uuid = user->uuidStr();
 			answerPacket.sessionKey = sesion->uuidStr();
 			sessions_.insertItem(sesion);
-			PLOG("Авторизация " % answerPacket.name);
+			PLOG("Авторизация " % answerPacket.name % " id=" % QString::number(sesion->data().userId));
 		}
 		else
 		{
